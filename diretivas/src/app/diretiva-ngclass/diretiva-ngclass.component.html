@@ -1,0 +1,21 @@
+<h3>Diretiva - ngClass:</h3>
+
+<!-- Sem ngClass -->
+<h1>
+    <i class="bi" 
+    [class.bi-star]="!meuFavorito" 
+    [class.bi-star-fill]="meuFavorito" 
+    (click)="onFavoritar()">
+
+    </i>
+</h1>
+
+<!-- Com ngClass -->
+<h1>
+    <i class="bi" 
+    [class.bi-star]="!meuFavorito" 
+    [class.bi-star-fill]="meuFavorito" 
+    (click)="onFavoritar()">
+
+    </i>
+</h1>

@@ -1,0 +1,15 @@
+<h3>Diretiva - ngSwitch, ngSwitchCase e ngSwitchDefault:</h3>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="nav navbar-nav">
+    <a class="nav-item nav-link" [class.active]="aba =='home'" (click)="aba == 'home'">Home</a>
+    <a class="nav-item nav-link" [class.active]="aba =='cadastro'" (click)="aba == 'cadastro'">Cadastro</a>
+    <a class="nav-item nav-link" [class.active]="aba =='lista'" (click)="aba == 'lista'">Lista</a>
+  </div>
+</nav>
+
+<div [ngSwitch]="aba">
+  <div *ngSwitchCase="'cadastro'">Aba cadastro ativado</div>
+  <div *ngSwitchCase="'lista'">Aba lista ativado</div>
+  <div *ngSwitchDefault>Aba Home (default)</div>
+</div>

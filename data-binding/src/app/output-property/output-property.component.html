@@ -1,0 +1,6 @@
+<div>
+    <!-- caso o valor seja 0, desabilitado o botão - usando property binding class -->
+    <button class="btn btn-danger" (click)="decrementa()" [disabled]="valor == 0">-</button>
+    <input type="text" [value]="valor" readonly #campoInput>
+    <button class="btn btn-primary" (click)="incrementa()">+</button>
+</div>
