@@ -1,0 +1,12 @@
+<h3>Operador - Elvis:</h3> <!-- facilita a navegação entre objetos - verifica se é nulo ou não -->
+
+<p>Descrição: {{ tarefa.descricao }}</p>
+
+<!-- forma extensa -->
+<!-- <p>Responsável: {{ tarefa.responsavel != null ? tarefa.responsavel.nome : '' }}</p>  -->
+
+<!-- forma resumida, faz a mesma lógica de cima -->
+<p>Responsável: {{ tarefa.responsavel?.nome }}</p>
+
+<!-- forma resumida, foi adicionado o obj usuario no component  -->
+<!-- <p>Responsável: {{ tarefa.responsavel?.usuario?.nome }}</p> -->

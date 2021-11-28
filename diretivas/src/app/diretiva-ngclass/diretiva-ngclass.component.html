@@ -1,21 +1,15 @@
 <h3>Diretiva - ngClass:</h3>
 
-<!-- Sem ngClass -->
+<!-- Sem ngClass - Utilizado quando tem no maximo um class binding -->
 <h1>
-    <i class="bi" 
-    [class.bi-star]="!meuFavorito" 
-    [class.bi-star-fill]="meuFavorito" 
-    (click)="onFavoritar()">
-
-    </i>
+    <i class="bi" [class.bi-star]="!meuFavorito" [class.bi-star-fill]="meuFavorito" (click)="onFavoritar()"> </i>
 </h1>
 
-<!-- Com ngClass -->
+<!-- Com ngClass - A partir do momento que tem mais de um, 
+    é utilizado o ngClass, passando todos os objetos dentro. Dessa forma é mais legível -->
 <h1>
-    <i class="bi" 
-    [class.bi-star]="!meuFavorito" 
-    [class.bi-star-fill]="meuFavorito" 
-    (click)="onFavoritar()">
-
+    <i class="bi" [ngClass]="{
+        'bi-heart': !meuFavorito,
+        'bi-heart-fill': meuFavorito}" (click)="onFavoritar()">
     </i>
 </h1>
