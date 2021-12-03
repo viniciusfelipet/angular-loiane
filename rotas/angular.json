@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "projeto-teste": {
+    "rotas": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/projeto-teste",
+            "outputPath": "dist/rotas",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "projeto-teste:build"
+            "browserTarget": "rotas:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "projeto-teste:build:production"
+              "browserTarget": "rotas:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "projeto-teste:build"
+            "browserTarget": "rotas:build"
           }
         },
         "test": {
@@ -90,7 +90,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/materialize-css/dist/js/materialize.min.js"
+            ]
           }
         },
         "lint": {
@@ -110,15 +113,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "projeto-teste:serve"
+            "devServerTarget": "rotas:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "projeto-teste:serve:production"
+              "devServerTarget": "rotas:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "projeto-teste"
+  "defaultProject": "rotas"
 }
