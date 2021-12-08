@@ -1,0 +1,14 @@
+<div style="margin-top: 20px;" *ngIf="form">
+    <div>
+        DEBUG do Form:
+    </div>
+    <pre style="background-color: antiquewhite;">
+        Form válido: {{ form.valid }}
+    </pre>
+    <pre style="background-color: antiquewhite;">
+        Form submetido: {{ form.submitted }}
+    </pre>
+    <pre style="background-color: antiquewhite;">
+        Valores a serem enviado ao servidor: <br> {{ form.value | json }} <!-- pipe JSON - transforma o objeto em json -->
+    </pre>
+</div>
