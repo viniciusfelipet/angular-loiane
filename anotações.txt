@@ -35,7 +35,7 @@ Conceitos:
 
 Template Driven vs Data Driven (Reativo)
 
--> Template Driven:
+-> Template Driven (toda a lógica fica no HTML):
 	- Formulário é criado e configurado no HTML
 	- Validações são feitas no template HTML
 	- Angular cria/deduz um FormGroup

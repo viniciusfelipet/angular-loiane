@@ -5,12 +5,10 @@
 
         <div class="col-sm-12">
             <label for="nome" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="nome" placeholder="Digite o nome..." name="nome"
-                [(ngModel)]="usuario.nome" required #nome="ngModel">
+            <input type="text" class="form-control" id="nome" placeholder="Digite o nome..." name="nome" ngModel
+                required #nome="ngModel">
 
-            <app-campo-control-erro 
-                [mostrarErro]="verificarValidTouched(nome)" 
-                msgErro="Nome é obrigatório">
+            <app-campo-control-erro [mostrarErro]="verificarValidTouched(nome)" msgErro="Nome é obrigatório">
             </app-campo-control-erro>
         </div>
         <!-- <div>
@@ -26,103 +24,103 @@
         <div class="col-sm-12">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" placeholder="Digite o email (ex: email@dominio.com)"
-                name="email" [(ngModel)]="usuario.email" required email #email="ngModel">
+                name="email" ngModel required email #email="ngModel">
 
-            <app-campo-control-erro 
-                [mostrarErro]="verificarValidTouched(email)" 
-                msgErro="Email é obrigatório">
+            <app-campo-control-erro [mostrarErro]="verificarValidTouched(email)" msgErro="Email é obrigatório">
             </app-campo-control-erro>
         </div>
     </div>
     <!----------------------------------------->
 
-    <!-- CEP / NÚMERO / COMPLEMENTO ----------->
-    <div class="form-group row">
 
-        <!-- CEP -->
-        <div class="col-md-3" [ngClass]="validaCssErro(cep)">
-            <label for="cep" class="form-label">CEP</label>
-            <input type="text" class="form-control" id="cep" name="cep" ngModel required #cep="ngModel">
+    <div ngModelGroup="endereco">
 
-            <app-campo-control-erro 
-                [mostrarErro]="verificarValidTouched(cep)" 
-                msgErro="CEP é obrigatório">
-            </app-campo-control-erro>
+        <!-- CEP / NÚMERO / COMPLEMENTO ----------->
+        <div class="form-group row">
+
+            <!-- CEP -->
+            <div class="col-md-3" [ngClass]="validaCssErro(cep)">
+                <label for="cep" class="form-label">CEP</label>
+                <input type="text" class="form-control" id="cep" name="cep" ngModel required #cep="ngModel"
+                    (blur)="consultaCep(cep.value, f)">
+
+                <app-campo-control-erro [mostrarErro]="verificarValidTouched(cep)" msgErro="CEP é obrigatório">
+                </app-campo-control-erro>
+            </div>
+            <!------>
+
+            <!-- NÚMERO -->
+            <div class="col-md-3" [ngClass]="validaCssErro(numero)">
+                <label for="numero" class="form-label">Número</label>
+                <input type="text" class="form-control" id="numero" name="numero" ngModel required #numero="ngModel">
+
+                <app-campo-control-erro [mostrarErro]="verificarValidTouched(numero)" msgErro="Número é obrigatório">
+                </app-campo-control-erro>
+            </div>
+            <!------>
+
+            <!-- COMPLEMENTO (não é obrigatório) -->
+            <div class="col-md-6">
+                <label for="complemento" class="form-label">Complemento</label>
+                <input type="text" class="form-control" id="complemento" name="complemento" ngModel
+                    #complemento="ngModel">
+            </div>
+            <!------>
+
         </div>
-        <!------>
+        <!----------------------------------------->
 
-        <!-- NÚMERO -->
-        <div class="col-md-3" [ngClass]="validaCssErro(numero)">
-            <label for="numero" class="form-label">Número</label>
-            <input type="text" class="form-control" id="numero" name="numero" ngModel required #numero="ngModel">
+        <!-- RUA ---------------------------------->
+        <div class="form-group row" [class.was-validated]="rua.invalid && rua.touched">
 
-            <app-campo-control-erro 
-                [mostrarErro]="verificarValidTouched(numero)" 
-                msgErro="Número é obrigatório">
-            </app-campo-control-erro>
-        </div>
-        <!------>
+            <div class="col-sm-12">
+                <label for="rua" class="form-label">Rua</label>
+                <input type="text" class="form-control" id="rua" placeholder="Digite a rua..." name="rua" ngModel
+                    required #rua="ngModel">
 
-        <!-- COMPLEMENTO (não é obrigatório) -->
-        <div class="col-md-6">
-            <label for="complemento" class="form-label">Complemento</label>
-            <input type="text" class="form-control" id="complemento" name="complemento" ngModel #complemento="ngModel">
-        </div>
-        <!------>
-
-    </div>
-    <!----------------------------------------->
-
-    <!-- RUA ---------------------------------->
-    <div class="form-group row" [class.was-validated]="rua.invalid && rua.touched">
-
-        <div class="col-sm-12">
-            <label for="rua" class="form-label">Rua</label>
-            <input type="text" class="form-control" id="rua" placeholder="Digite a rua..." name="rua"
-                [(ngModel)]="usuario.rua" required #rua="ngModel">
-
-            <div *ngIf="rua.invalid && rua.touched" class="alert alert-danger">
-                Rua é obrigatório
+                <div *ngIf="rua.invalid && rua.touched" class="alert alert-danger">
+                    Rua é obrigatório
+                </div>
             </div>
         </div>
-    </div>
-    <!----------------------------------------->
+        <!----------------------------------------->
 
-    <!-- BAIRRO / CIDADE / ESTADO (usando readOnly) ---------------------------------->
-    <div class="form-grou row">
+        <!-- BAIRRO / CIDADE / ESTADO (usando readOnly) ---------------------------------->
+        <div class="form-grou row">
 
-        <!-- BAIRRO -->
-        <div class="col-md-5" [class.was-validated]="bairro.invalid && bairro.touched">
-            <label for="bairro" class="form-label">Bairro</label>
-            <input type="text" class="form-control" id="bairro" name="bairro" ngModel required #bairro="ngModel">
+            <!-- BAIRRO -->
+            <div class="col-md-5" [class.was-validated]="bairro.invalid && bairro.touched">
+                <label for="bairro" class="form-label">Bairro</label>
+                <input type="text" class="form-control" id="bairro" name="bairro" ngModel required #bairro="ngModel">
 
-            <div *ngIf="bairro.invalid && bairro.touched" class="alert alert-danger">
-                Bairro é obrigatório
+                <div *ngIf="bairro.invalid && bairro.touched" class="alert alert-danger">
+                    Bairro é obrigatório
+                </div>
             </div>
-        </div>
-        <!------>
+            <!------>
 
-        <!-- CIDADE -->
-        <div class="col-md-4" [class.was-validated]="cidade.invalid && cidade.touched">
-            <label for="cidade" class="form-label">Cidade</label>
-            <input type="text" class="form-control" id="cidade" name="cidade" ngModel required #cidade="ngModel">
+            <!-- CIDADE -->
+            <div class="col-md-4" [class.was-validated]="cidade.invalid && cidade.touched">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input type="text" class="form-control" id="cidade" name="cidade" ngModel required #cidade="ngModel">
 
-            <div *ngIf="cidade.invalid && cidade.touched" class="alert alert-danger">
-                Cidade é obrigatório
+                <div *ngIf="cidade.invalid && cidade.touched" class="alert alert-danger">
+                    Cidade é obrigatório
+                </div>
             </div>
-        </div>
-        <!------>
+            <!------>
 
-        <!-- ESTADO -->
-        <div class="col-md-3" [class.was-validated]="estado.invalid && estado.touched">
-            <label for="estado" class="form-label">Estado</label>
-            <input type="text" class="form-control" id="estado" name="estado" ngModel required #estado="ngModel">
+            <!-- ESTADO -->
+            <div class="col-md-3" [class.was-validated]="estado.invalid && estado.touched">
+                <label for="estado" class="form-label">Estado</label>
+                <input type="text" class="form-control" id="estado" name="estado" ngModel required #estado="ngModel">
 
-            <div *ngIf="estado.invalid && estado.touched" class="alert alert-danger">
-                Estado é obrigatório
+                <div *ngIf="estado.invalid && estado.touched" class="alert alert-danger">
+                    Estado é obrigatório
+                </div>
             </div>
+            <!------>
         </div>
-        <!------>
 
     </div>
     <!----------------------------------------->
