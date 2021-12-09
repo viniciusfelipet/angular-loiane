@@ -14,19 +14,56 @@ Modulo/Module: diferente dos components não controlam nenhuma view(html). Um Mo
 Resumindo: É como se o Module fosse um cômodo e os Components os móveis que preenchem aquele cômodo.
 
 --------------------------------------------------------------------
+--------------------------------------------------------------------
+Conceitos:
+
+@Input - passar informações do html para o component
+
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
 - DataBinding:
 
 <TEMPLATE HTML>	<--{{valor}}--------------------- <COMPONENT> Property Binding com Interpolação
-<TEMPLATE HTML> <--[propriedade]="valor"--------- <COMPONENT> Property Binding com Class/Style
+<TEMPLATE HTML> <--[propriedade]="valor"--------- <COMPONENT> Property Binding com Class/Style (utilizado quando quer referenciar um metodo, uma variavel local ou uma expressão)
 <TEMPLATE HTML> ---(evento)="metodo()"------------> <COMPONENT> Event Data Binding
 <TEMPLATE HTML> <---[(ngModel)]="propriedade"---> <COMPONENT> Two Way Data Binding
 
 --------------------------------------------------------------------
+--------------------------------------------------------------------
 - Forms:
 
-Estado:
--> Controle visitado - ng-touched (SIM) ou ng-untouched (NÃO)
--> Valor mudou - ng-dirty (SIM) ou ng-pristine (NÃO)
--> Controle válido - ng-valid (SIM) ou ng-invalid (NÃO)
+Template Driven vs Data Driven (Reativo)
+
+-> Template Driven:
+	- Formulário é criado e configurado no HTML
+	- Validações são feitas no template HTML
+	- Angular cria/deduz um FormGroup
+	- Valores do form PRECISAM ser submetido com ngSubmit
+
+-> CONCEITOS IMPORTANTES:
+
+- Controles para formulário (todos pertencem ao FormsModule !importar no module.ts!):
+* ngForm = Solicita ao Angular, ajuda para gerenciar o fomulário e já cria uma FormGroup no HTML
+* (ngSubmit) = É um event que realiza a submissão dos dados do formulário (obs: adicionar button com o type "submit")
+* ngModel = Realiza a associação de cada input do html à um campo de valor do formulário
+
+
+- Estados:
+* Controle visitado - ng-touched (SIM) ou ng-untouched (NÃO)
+* Valor mudou - ng-dirty (SIM) ou ng-pristine (NÃO)
+* Controle válido - ng-valid (SIM) ou ng-invalid (NÃO)
+
+-------
+	
+-> Data Driven (Reativo):
+	- Formulário é criado e configurado no COMPONENTE
+	- Validações são feitas no COMPONENTE
+	- Angular usa o FormGroup criado no COMPONENTE
+	- Form já está no COMPONENTE e NÃO precisa do ngSubmit
+
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
 
 
