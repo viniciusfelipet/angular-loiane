@@ -1,35 +1,134 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f)">
 
-    <div class="form-group" [ngClass]="{
-        'was-validated': nome.invalid && nome.touched}"> <!-- utilizando validação do bootstrap -->
+    <!-- NOME ---------------------------------->
+    <div class="form-group row" [ngClass]="{
+        'was-validated': nome.invalid && nome.touched}">
+        <!-- utilizando validação do bootstrap -->
 
-        <label for="nome" class="form-label">Nome</label>
-        <input type="text" class="form-control" id="nome" placeholder="Digite o nome..." name="nome"
-            [(ngModel)]="usuario.nome" required #nome="ngModel">
+        <div class="col-sm-12">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" placeholder="Digite o nome..." name="nome"
+                [(ngModel)]="usuario.nome" required #nome="ngModel">
 
-         <div *ngIf="nome.invalid && nome.touched" class="alert alert-danger">
-            Nome é obrigatório
+            <div *ngIf="nome.invalid && nome.touched" class="alert alert-danger">
+                Nome é obrigatório
+            </div>
         </div>
         <!-- <div>
             {{ nome.className }}
         </div> -->
     </div>
+    <!----------------------------------------->
 
-    <div class="form-group" [ngClass]="{
-        'was-validated': email.invalid && email.touched}"> <!-- utilizando a validação do bootstrap-->
+    <!-- EMAIL -------------------------------->
+    <div class="form-group row" [ngClass]="{
+        'was-validated': email.invalid && email.touched}">
+        <!-- utilizando a validação do bootstrap-->
 
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Digite o email (ex: email@dominio.com)"
-            name="email" [(ngModel)]="usuario.email" required email #email="ngModel">
+        <div class="col-sm-12">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Digite o email (ex: email@dominio.com)"
+                name="email" [(ngModel)]="usuario.email" required email #email="ngModel">
 
-        <div *ngIf="email.invalid && email.touched" class="alert alert-danger">
-            Email inválido
+            <div *ngIf="email.invalid && email.touched" class="alert alert-danger">
+                Email inválido
+            </div>
         </div>
     </div>
+    <!----------------------------------------->
+
+    <!-- CEP / NÚMERO /  ---------------------------------->
+    <div class="form-group row">
+
+        <!-- CEP -->
+        <div class="col-md-3" [class.was-validated]="cep.invalid && cep.touched">
+            <label for="cep" class="form-label">CEP</label>
+            <input type="text" class="form-control" id="cep" name="cep" ngModel required #cep="ngModel">
+
+            <div *ngIf="cep.invalid && cep.touched" class="alert alert-danger">
+                CEP é obrigatório
+            </div>
+        </div>
+        <!------>
+
+        <!-- NÚMERO -->
+        <div class="col-md-3" [class.was-validated]="numero.invalid && numero.touched">
+            <label for="numero" class="form-label">Número</label>
+            <input type="text" class="form-control" id="numero" name="numero" ngModel required #numero="ngModel">
+
+            <div *ngIf="numero.invalid && numero.touched" class="alert alert-danger">
+                Número é obrigatório
+            </div>
+        </div>
+        <!------>
+
+        <!-- COMPLEMENTO (não é obrigatório)-->
+        <div class="col-md-6">
+            <label for="complemento" class="form-label">Complemento</label>
+            <input type="text" class="form-control" id="complemento" name="complemento" ngModel #complemento="ngModel">
+        </div>
+        <!------>
+
+    </div>
+    <!----------------------------------------->
+
+    <!-- RUA ---------------------------------->
+    <div class="form-group row" [class.was-validated]="rua.invalid && rua.touched">
+
+        <div class="col-sm-12">
+            <label for="rua" class="form-label">Rua</label>
+            <input type="text" class="form-control" id="rua" placeholder="Digite a rua..." name="rua"
+                [(ngModel)]="usuario.rua" required #rua="ngModel">
+
+            <div *ngIf="rua.invalid && rua.touched" class="alert alert-danger">
+                Rua é obrigatório
+            </div>
+        </div>
+    </div>
+    <!----------------------------------------->
+
+    <!-- BAIRRO / CIDADE / ESTADO (usando readOnly) ---------------------------------->
+    <div class="form-grou row">
+
+        <!-- BAIRRO -->
+        <div class="col-md-5" [class.was-validated]="bairro.invalid && bairro.touched">
+            <label for="bairro" class="form-label">Bairro</label>
+            <input type="text" class="form-control" id="bairro" name="bairro" ngModel required #bairro="ngModel">
+
+            <div *ngIf="bairro.invalid && bairro.touched" class="alert alert-danger">
+                Bairro é obrigatório
+            </div>
+        </div>
+        <!------>
+
+        <!-- CIDADE -->
+        <div class="col-md-4" [class.was-validated]="cidade.invalid && cidade.touched">
+            <label for="cidade" class="form-label">Cidade</label>
+            <input type="text" class="form-control" id="cidade" name="cidade" ngModel required #cidade="ngModel">
+
+            <div *ngIf="cidade.invalid && cidade.touched" class="alert alert-danger">
+                Cidade é obrigatório
+            </div>
+        </div>
+        <!------>
+
+        <!-- ESTADO -->
+        <div class="col-md-3" [class.was-validated]="estado.invalid && estado.touched">
+            <label for="estado" class="form-label">Estado</label>
+            <input type="text" class="form-control" id="estado" name="estado" ngModel required #estado="ngModel">
+
+            <div *ngIf="estado.invalid && estado.touched" class="alert alert-danger">
+                Estado é obrigatório
+            </div>
+        </div>
+        <!------>
+
+    </div>
+    <!----------------------------------------->
 
     <br>
     <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Enviar (submit)</button>
 
     <app-form-debug [form]="f"></app-form-debug>
-    
+
 </form>
