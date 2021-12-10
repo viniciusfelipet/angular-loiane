@@ -8,7 +8,9 @@
             <input type="text" class="form-control" id="nome" placeholder="Digite o nome..." name="nome" ngModel
                 required #nome="ngModel">
 
-            <app-campo-control-erro [mostrarErro]="verificarValidTouched(nome)" msgErro="Nome é obrigatório">
+            <app-campo-control-erro 
+                [mostrarErro]="verificarValidTouched(nome)" 
+                msgErro="Nome é obrigatório">
             </app-campo-control-erro>
         </div>
         <!-- <div>
@@ -127,6 +129,8 @@
 
     <br>
     <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Enviar (submit)</button>
+    <!-- <button class="btn" type="button" (click)="resetar()">Cancelar</button> -->
+    <button type="reset" class="btn"> Cancelar / Limpar</button>
 
     <app-form-debug [form]="f"></app-form-debug>
 

@@ -24,7 +24,10 @@ export class TemplateFormComponent implements OnInit {
 
     // https://httpbin.org/post -> site gratuito para teste de requisição sem servidor backend
     this.http.post("https://httpbin.org/post", JSON.stringify(formulario.value))
-    .subscribe(dados => console.log(dados));
+      .subscribe(dados => {
+        console.log(dados);
+        formulario.form.reset();
+      });
   }
 
   validaCssErro(campo) {
@@ -64,7 +67,7 @@ export class TemplateFormComponent implements OnInit {
   }
 
   populaDadosForm(dados, formulario) {
-    
+
     /*Não é muito utiliznado quando se tem muitos campos: formulario.setValue({
       nome: formulario.value.nome,
       email: formulario.value.email,
@@ -91,7 +94,7 @@ export class TemplateFormComponent implements OnInit {
     });
 
     //console.log(formulario);
-    
+
   }
 
   resetaDadosForm(formulario) {
