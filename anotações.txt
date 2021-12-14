@@ -17,8 +17,8 @@ Resumindo: É como se o Module fosse um cômodo e os Components os móveis que p
 --------------------------------------------------------------------
 Conceitos:
 
-@Input - passar informações do html para o component
-
+@Input - passar informações do html para o component / recebe um valor do componente pai para o componente filho
+@Output - utilizado para expor um evento ou expor um valor
 
 --------------------------------------------------------------------
 --------------------------------------------------------------------
@@ -35,10 +35,10 @@ Conceitos:
 
 Template Driven vs Data Driven (Reativo)
 
--> Template Driven (toda a lógica fica no HTML):
+-> Template Driven (toda a lógica fica no HTML - orientado a template):
 	- Formulário é criado e configurado no HTML
+	- Angular cria/deduz um FormGroup a partir do HTML
 	- Validações são feitas no template HTML
-	- Angular cria/deduz um FormGroup
 	- Valores do form PRECISAM ser submetido com ngSubmit
 
 -> CONCEITOS IMPORTANTES:
@@ -56,13 +56,18 @@ Template Driven vs Data Driven (Reativo)
 
 -------
 	
--> Data Driven (Reativo):
-	- Formulário é criado e configurado no COMPONENTE
+-> Data Driven (Formulário Reativo - orientado a dados):
+	- Formulário é criado e configurado no COMPONENTE, e é sincronizado com o DOM/HTML
 	- Validações são feitas no COMPONENTE
 	- Angular usa o FormGroup criado no COMPONENTE
 	- Form já está no COMPONENTE e NÃO precisa do ngSubmit
 
+-> CONCEITOS IMPORTANTES:
 
+- Sempre importar o 'ReactiveFormsModule' no module quando for utiliar o data-driven (formulário reativo)
+- FormGroup representa todo o formulário
+- FormBuilder é o construtor de formulários
+- Não é utilizado variaveis locais no HTML, diferente do template-driven. Sendo assim, na maioria das vezes, o HTML utilizará property binding
 --------------------------------------------------------------------
 --------------------------------------------------------------------
 

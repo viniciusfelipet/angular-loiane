@@ -39,6 +39,17 @@ export class DataFormComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
       email: [null, Validators.compose([Validators.required, Validators.email])],
+
+      // Agrupando os seguintes dados dentro de um "objeto" 'endereco'
+      endereco: this.formBuilder.group({
+        cep: [null, Validators.required],
+        numero: [null, Validators.required],
+        complemento: [null],
+        rua: [null, Validators.required],
+        bairro: [null, Validators.required],
+        cidade: [null, Validators.required],
+        estado: [null, Validators.required]
+      })
     });
 
 
@@ -67,7 +78,7 @@ export class DataFormComponent implements OnInit {
     this.formulario.reset();
   }
 
-  validaCssErro(campo) {
+  aplicaCssErro(campo: string) {
     return {
       'was-validated': this.verificarValidTouched(campo)
       // caso tive mais coisa - ex: 'has-feedback': campo.invalid && campo.touched
@@ -82,12 +93,84 @@ export class DataFormComponent implements OnInit {
     return this.formulario.get(campo).invalid && this.formulario.get(campo).touched;
   }
 
-  verificaEmailInvalido(){
+  verificaEmailInvalido() {
     let campoEmail = this.formulario.get('email');
 
     if (campoEmail.errors) {
-      return campoEmail.errors['email'] && campoEmail.touched;
+      return campoEmail.errors.required && campoEmail.touched;
     }
+  }
+
+  consultaCep() {
+
+    let cep = this.formulario.get('endereco.cep').value;
+
+    // Nova variável "cep somente com dígitos"
+    // var cep = $(this).val().replace(/\D/g, '');
+    cep = cep.replace(/\D/g, '');
+
+    //Verifica se campo cep possui valor informado.
+    if (cep != "") {
+
+      //Expressão regular para validar o CEP.
+      var validacep = /^[0-9]{8}$/;
+
+      //Valida o formato do CEP.
+      if (validacep.test(cep)) {
+
+        this.resetaDadosForm();
+
+        // Realiza a requisição
+        this.http.get("https://viacep.com.br/ws/" + cep + "/json/")
+          .subscribe(dados => this.populaDadosForm(dados));
+        //.subscribe(dados => console.log(dados));
+      }
+    }
+  }
+
+  populaDadosForm(dados) {
+
+    /*Não é muito utilizado quando se tem muitos campos, pois é obrigatório informar todos os campos: formulario.setValue({
+      nome: formulario.value.nome,
+      email: formulario.value.email,
+      endereco: {
+        rua: dados.logradouro,
+        cep: dados.cep,
+        numero: '',
+        complemento: dados.complemento,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    });*/
+
+    // patchValue: informa apenas uma parte do formulário a ser alterada
+    //formulario.form.
+    this.formulario.patchValue({
+      endereco: {
+        rua: dados.logradouro,
+        complemento: dados.complemento,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    });
+
+    //console.log(formulario);
+
+  }
+
+  resetaDadosForm() {
+    //formulario.form.patchValue({
+    this.formulario.patchValue({
+      endereco: {
+        rua: null,
+        complemento: null,
+        bairro: null,
+        cidade: null,
+        estado: null,
+      }
+    });
   }
 
 }

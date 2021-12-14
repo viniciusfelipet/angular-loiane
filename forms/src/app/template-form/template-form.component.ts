@@ -68,7 +68,7 @@ export class TemplateFormComponent implements OnInit {
 
   populaDadosForm(dados, formulario) {
 
-    /*Não é muito utiliznado quando se tem muitos campos: formulario.setValue({
+    /*Não é muito utilizado quando se tem muitos campos, pois é obrigatório informar todos os campos: formulario.setValue({
       nome: formulario.value.nome,
       email: formulario.value.email,
       endereco: {
@@ -82,7 +82,7 @@ export class TemplateFormComponent implements OnInit {
       }
     });*/
 
-    // patchValue: configura apenas uma parte do formulário
+    // patchValue: informa apenas uma parte do formulário a ser alterada
     formulario.form.patchValue({
       endereco: {
         rua: dados.logradouro,

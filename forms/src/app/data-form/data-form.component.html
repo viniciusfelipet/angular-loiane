@@ -2,14 +2,15 @@
 <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
     <!-- NOME ---------------------------------->
-    <div class="form-group row" [ngClass]="validaCssErro('nome')">
+    <div class="form-group row" [ngClass]="aplicaCssErro('nome')">
 
         <div class="col-sm-12">
             <label for="nome" class="form-label">Nome</label>
 
             <!-- 4º - Sincronizando o campo input do HTML ao campo definido no formBuilder no component
                 OBS: trocar 'name="nome"' (template-drive) por 'formControlName="nome"' (data-driven) -->
-            <input type="text" class="form-control" id="nome" placeholder="Digite o nome..." formControlName="nome">
+            <input type="text" class="form-control" id="nome" placeholder="Digite o nome..." formControlName="nome"
+                required>
 
 
             <!-- outra opção: [mostrarErro]="verificarValidTouched('nome')"  -->
@@ -21,23 +22,125 @@
     <!----------------------------------------->
 
     <!-- EMAIL -------------------------------->
-    <div class="form-group row" [ngClass]="validaCssErro('email')">
+    <div class="form-group row" [ngClass]="aplicaCssErro('email')">
         <!-- utilizando a validação do bootstrap-->
 
         <div class="col-sm-12">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" placeholder="Digite o email (ex: email@dominio.com)"
-                formControlName="email">
+                formControlName="email" required>
 
-            <app-campo-control-erro [mostrarErro]="verificarValidTouched('email')"
-                msgErro="Email é obrigatório">
+            <app-campo-control-erro [mostrarErro]="verificarValidTouched('email')" msgErro="Email é obrigatório">
             </app-campo-control-erro>
 
-            <app-campo-control-erro [mostrarErro]="verificaEmailInvalido()"
-            msgErro="Email inválido">
+            <app-campo-control-erro [mostrarErro]="verificaEmailInvalido()" msgErro="Email inválido">
             </app-campo-control-erro>
         </div>
     </div>
+
+    <!-- Agrupando os seguintes dados dentro de um "objeto" 'endereco'-->
+    <div formGroupName="endereco">
+
+        <!-- CEP / NÚMERO / COMPLEMENTO ----------->
+        <div class="form-group row">
+
+            <!-- CEP -->
+            <div class="col-md-3" [ngClass]="aplicaCssErro('endereco.cep')">
+                <label for="cep" class="form-label">CEP</label>
+                <input type="text" class="form-control" id="cep" formControlName="cep" required
+                    (blur)="consultaCep()"> <!-- já possui referencia a cep e formulario dentro do código --> 
+
+                <!-- caso houvesse mais objetos com mais atributos dentro de endereco:
+                    [mostrarErro]="... formulario.get('endereco.cep.outroAtribuitoOuObjeto')" -->
+                <app-campo-control-erro [mostrarErro]="verificarValidTouched('endereco.cep')"
+                    msgErro="CEP é obrigatório">
+                </app-campo-control-erro>
+            </div>
+            <!------>
+
+            <!-- NÚMERO -->
+            <div class="col-md-3" [ngClass]="aplicaCssErro('endereco.numero')">
+                <label for="numero" class="form-label">Número</label>
+                <input type="text" class="form-control" id="numero" formControlName="numero" required>
+
+                <app-campo-control-erro [mostrarErro]="verificarValidTouched('endereco.numero')"
+                    msgErro="Número é obrigatório">
+                </app-campo-control-erro>
+            </div>
+            <!------>
+
+            <!-- COMPLEMENTO (não é obrigatório) -->
+            <div class="col-md-6">
+                <label for="complemento" class="form-label">Complemento</label>
+                <input type="text" class="form-control" id="complemento" formControlName="complemento" required>
+            </div>
+            <!------>
+
+        </div>
+        <!----------------------------------------->
+
+        <!-- RUA ---------------------------------->
+        <div class="form-group row"
+            [class.was-validated]="formulario.get('endereco.rua').invalid && formulario.get('endereco.rua').touched">
+
+            <div class="col-sm-12">
+                <label for="rua" class="form-label">Rua</label>
+                <input type="text" class="form-control" id="rua" placeholder="Digite a rua..." formControlName="rua"
+                    required>
+
+                <div *ngIf="formulario.get('endereco.rua').invalid && formulario.get('endereco.rua').touched"
+                    class="alert alert-danger">
+                    Rua é obrigatório
+                </div>
+            </div>
+        </div>
+        <!----------------------------------------->
+
+        <!-- BAIRRO / CIDADE / ESTADO (usando readOnly) ---------------------------------->
+        <div class="form-grou row">
+
+            <!-- BAIRRO -->
+            <div class="col-md-5"
+                [class.was-validated]="formulario.get('endereco.bairro').invalid && formulario.get('endereco.bairro').touched">
+                <label for="bairro" class="form-label">Bairro</label>
+                <input type="text" class="form-control" id="bairro" formControlName="bairro" required>
+
+                <div *ngIf="formulario.get('endereco.bairro').invalid && formulario.get('endereco.bairro').touched"
+                    class="alert alert-danger">
+                    Bairro é obrigatório
+                </div>
+            </div>
+            <!------>
+
+            <!-- CIDADE -->
+            <div class="col-md-4"
+                [class.was-validated]="formulario.get('endereco.cidade').invalid && formulario.get('endereco.cidade').touched">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input type="text" class="form-control" id="cidade" formControlName="cidade" required>
+
+                <div *ngIf="formulario.get('endereco.cidade').invalid && formulario.get('endereco.cidade').touched"
+                    class="alert alert-danger">
+                    Cidade é obrigatório
+                </div>
+            </div>
+            <!------>
+
+            <!-- ESTADO -->
+            <div class="col-md-3"
+                [class.was-validated]="formulario.get('endereco.estado').invalid && formulario.get('endereco.estado').touched">
+                <label for="estado" class="form-label">Estado</label>
+                <input type="text" class="form-control" id="estado" formControlName="estado">
+
+                <div *ngIf="formulario.get('endereco.estado').invalid && formulario.get('endereco.estado').touched "
+                    class="alert alert-danger">
+                    Estado é obrigatório
+                </div>
+            </div>
+            <!------>
+        </div>
+
+    </div>
+    <!----------------------------------------->
     <!----------------------------------------->
     <br>
     <button type="submit" class="btn btn-primary">Enviar (submit)</button>
