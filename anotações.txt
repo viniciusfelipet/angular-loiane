@@ -19,6 +19,8 @@ Conceitos:
 
 @Input - passar informações do html para o component / recebe um valor do componente pai para o componente filho
 @Output - utilizado para expor um evento ou expor um valor
+Interface - é inserido apenas as assinaturas doq será implantado na classe (ex: metodo sem argumento)
+Classe - pode ser inserido metodos com corpo
 
 --------------------------------------------------------------------
 --------------------------------------------------------------------
