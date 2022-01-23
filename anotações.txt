@@ -70,6 +70,7 @@ Template Driven vs Data Driven (Reativo)
 - FormGroup representa todo o formulário
 - FormBuilder é o construtor de formulários
 - Não é utilizado variaveis locais no HTML, diferente do template-driven. Sendo assim, na maioria das vezes, o HTML utilizará property binding
+- [ngValue] vs [value] no <option> para os <select>: 'ngValue' é usado quando estamos mexendo/comparando com o objeto inteiro, já o 'value' é para quando estamos mexendo/comparando um atribuito simples (ex: [value]="tecnologias.nome")
 --------------------------------------------------------------------
 --------------------------------------------------------------------
 

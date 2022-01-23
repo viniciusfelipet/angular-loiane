@@ -1,3 +1,4 @@
+import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { EstadoBr } from './../shared/models/estado-br';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -16,13 +17,17 @@ export class DataFormComponent implements OnInit {
   formulario: FormGroup;
 
   estados: EstadoBr[];
+  cargos: any[];
+  tecnologias: any[];
+  newsletterOpcs: any[];
 
   // SEGUNDA FORMA DE CRIAR FORMULÁRIO:
   // FormBuilder - construtor de formulários
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private dropDownService: DropdownService
+    private dropDownService: DropdownService,
+    private consultaCepService: ConsultaCepService
   ) { }
 
   ngOnInit(): void {
@@ -30,8 +35,12 @@ export class DataFormComponent implements OnInit {
     this.dropDownService.getEstadosBr().subscribe((dados: EstadoBr[]) => {
       this.estados = dados;
       console.log(this.estados);
-      
+
     });
+
+    this.cargos = this.dropDownService.getCargos();
+    this.tecnologias = this.dropDownService.getTecnologias();
+    this.newsletterOpcs = this.dropDownService.getNewsletter();
 
     // 2º - Inicializar o formulario
 
@@ -61,7 +70,10 @@ export class DataFormComponent implements OnInit {
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
         estado: [null, Validators.required]
-      })
+      }),
+      cargo: [null],
+      tecnologias: [null],
+      newsletter: ['s'],
     });
   }
 
@@ -112,27 +124,10 @@ export class DataFormComponent implements OnInit {
 
     let cep = this.formulario.get('endereco.cep').value;
 
-    // Nova variável "cep somente com dígitos"
-    // var cep = $(this).val().replace(/\D/g, '');
-    cep = cep.replace(/\D/g, '');
-
-    //Verifica se campo cep possui valor informado.
-    if (cep != "") {
-
-      //Expressão regular para validar o CEP.
-      var validacep = /^[0-9]{8}$/;
-
-      //Valida o formato do CEP.
-      if (validacep.test(cep)) {
-
-        this.resetaDadosForm();
-
-        // Realiza a requisição
-        this.http.get("https://viacep.com.br/ws/" + cep + "/json/")
-          .subscribe(dados => this.populaDadosForm(dados));
-        //.subscribe(dados => console.log(dados));
-      }
+    if (cep != null && cep !== '') {
+      this.consultaCepService.consultaCep(cep).subscribe(dados => this.populaDadosForm(dados));
     }
+
   }
 
   populaDadosForm(dados) {
@@ -207,4 +202,17 @@ export class DataFormComponent implements OnInit {
     }
   }
 
+  setarCargo() {
+    const cargo = { nome: 'Dev', nivel: 'Pleno', desc: 'Dev PL' };
+
+    this.formulario.get('cargo').setValue(cargo);
+  }
+
+  compararCargos(obj1: any, obj2: any) {
+    return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2;
+  }
+
+  setarTecnologias() {
+    this.formulario.get('tecnologias').setValue(['java', 'angular']);
+  }
 }
