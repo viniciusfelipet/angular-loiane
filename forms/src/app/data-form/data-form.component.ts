@@ -2,9 +2,10 @@ import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { EstadoBr } from './../shared/models/estado-br';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { DropdownService } from './../shared/services/dropdown.service';
+import { FormValidations } from '../shared/form-validations/form-validations';
 
 @Component({
   selector: 'app-data-form',
@@ -20,6 +21,8 @@ export class DataFormComponent implements OnInit {
   cargos: any[];
   tecnologias: any[];
   newsletterOpcs: any[];
+
+  frameworks = ['Angular', 'React', 'Vue', 'Sencha']
 
   // SEGUNDA FORMA DE CRIAR FORMULÁRIO:
   // FormBuilder - construtor de formulários
@@ -74,6 +77,8 @@ export class DataFormComponent implements OnInit {
       cargo: [null],
       tecnologias: [null],
       newsletter: ['s'],
+      termos: [null, Validators.requiredTrue],
+      frameworks: this.buildFrameworks()
     });
   }
 
@@ -81,9 +86,21 @@ export class DataFormComponent implements OnInit {
     //Objeto fomulário (FormGroup):
     console.log(this.formulario);
 
+    // Copiar objeto para outro: Object.assign(<destino>, <origem>);
+    let valueSubmit = Object.assign({}, this.formulario.value);
+
+    valueSubmit = Object.assign(valueSubmit, {
+      frameworks: valueSubmit.frameworks
+        .map((valor, indice) => valor ? this.frameworks[indice] : null)
+        .filter(v => v !== null)
+    });
+
+    console.log(valueSubmit);
+
+
     if (this.formulario.valid) {
       // https://httpbin.org/post -> site gratuito para teste de requisição sem servidor backend
-      this.http.post("https://httpbin.org/post", JSON.stringify(this.formulario.value))
+      this.http.post("https://httpbin.org/post", JSON.stringify(valueSubmit))
         .subscribe(dados => {
 
           // response:
@@ -214,5 +231,12 @@ export class DataFormComponent implements OnInit {
 
   setarTecnologias() {
     this.formulario.get('tecnologias').setValue(['java', 'angular']);
+  }
+
+  buildFrameworks() {
+
+    const values = this.frameworks.map(v => new FormControl(false));
+
+    return this.formBuilder.array(values, FormValidations.requiredMinCheckbox(1));
   }
 }

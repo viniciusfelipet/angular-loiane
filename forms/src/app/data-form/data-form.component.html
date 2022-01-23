@@ -144,6 +144,7 @@
     </div>
     <!----------------------------------------->
 
+    <!-- CARGOS/TECNOLOGIAS/NEWSLETTER -->
     <div class="form-group row">
         <!-- CARGOS -->
         <div class="col-md-3"
@@ -179,6 +180,42 @@
         </div>
         <!---->
     </div>
+    <!---->
+
+    <!-- TERMOS/FRAMEWORKS -->
+    <div class="form-group">
+        <!-- TERMOS (checkbox toggle = apenas um checkbox)  -->
+        <div class="col-md-3" [ngClass]="aplicaCssErro('termos')">
+            <div class="checkbox">
+                <label class="checkbox-inline">
+                    <input type="checkbox" formControlName="termos"> Aceito os termos.
+                </label>
+
+                <app-campo-control-erro [mostrarErro]="verificarValidTouched('termos')"
+                    msgErro="Por favor, aceite os termos.">
+                </app-campo-control-erro>
+            </div>
+        </div>
+        <!---->
+
+        <!-- FRAMEWORKS -->
+        <div class="col-md-3" [ngClass]="aplicaCssErro('frameworks')">
+            <label for="frameworks">Frameworks</label>
+            <div id="frameworks" class="row">
+                <div class="checkbox col-sm-4" formArrayName="frameworks"
+                    *ngFor="let item of formulario.get('frameworks')['controls'] let i = index">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" [formControlName]="i"> {{frameworks[i]}}
+                    </label>
+                </div>
+                <app-campo-control-erro [mostrarErro]="verificarValidTouched('frameworks')"
+                    msgErro="Por favor, preencha pelo menos uma opção">
+                </app-campo-control-erro>
+            </div>
+        </div>
+        <!---->
+    </div>
+    <!---->
 
     <br>
     <button type="submit" class="btn btn-primary">Enviar (submit)</button>

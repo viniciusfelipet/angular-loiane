@@ -21,6 +21,7 @@ Conceitos:
 @Output - utilizado para expor um evento ou expor um valor
 Interface - é inserido apenas as assinaturas doq será implantado na classe (ex: metodo sem argumento)
 Classe - pode ser inserido metodos com corpo
+Metodos 'static': quando um método é static, você tem uma instância para cada chamada a ele, com isso, não precisamos instaciar a classe no component, diferente dos services.
 
 --------------------------------------------------------------------
 --------------------------------------------------------------------
