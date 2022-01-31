@@ -46,6 +46,10 @@ Template Driven vs Data Driven (Reativo)
 
 -> CONCEITOS IMPORTANTES:
 
+- FormControl: Item de formulário individual, mantém status e regras de validação.
+- FormGroup: Coleções de FormControl, mantém status para coleta de formControl.
+- FormArray: Matriz de FormControls.1
+
 - Controles para formulário (todos pertencem ao FormsModule !importar no module.ts!):
 * ngForm = Solicita ao Angular, ajuda para gerenciar o fomulário e já cria uma FormGroup no HTML
 * (ngSubmit) = É um event que realiza a submissão dos dados do formulário (obs: adicionar button com o type "submit")
