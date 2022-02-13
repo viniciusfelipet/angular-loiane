@@ -35,8 +35,34 @@
 
             <app-campo-control-erro [mostrarErro]="verificaEmailInvalido()" msgErro="Email inválido">
             </app-campo-control-erro>
+
+            <!-- Validação Assincrona -->
+            <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'PENDING'" msgErro="Validando email...">
+            </app-campo-control-erro>
+
+            <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'VALID'" msgErro="Email válido!">
+            </app-campo-control-erro>
+            
+            <app-campo-control-erro [mostrarErro]="formulario.get('email').hasError('emailInvalido')" msgErro="Email já cadastrado!">
+            </app-campo-control-erro>
         </div>
     </div>
+    <!----------------------------------------->
+
+    <!-- CONFIRMAR EMAIL -------------------------------->
+    <div class="form-group row" [ngClass]="aplicaCssErro('confirmarEmail')">
+        <!-- utilizando a validação do bootstrap-->
+
+        <div class="col-sm-12">
+            <label for="confirmarEmail" class="form-label">Confirmar Email</label>
+            <input type="email" class="form-control" id="confirmarEmail" placeholder="Confirme o email"
+                formControlName="confirmarEmail" required>
+
+            <app-campo-control-erro [mostrarErro]="formulario.get('confirmarEmail').hasError('equalsTo')" msgErro="Emails não são iguais.">
+            </app-campo-control-erro>
+        </div>
+    </div>
+    <!----------------------------------------->
 
     <!-- Agrupando os seguintes dados dentro de um "objeto" 'endereco'-->
     <div formGroupName="endereco">
@@ -52,8 +78,10 @@
 
                 <!-- caso houvesse mais objetos com mais atributos dentro de endereco:
                     [mostrarErro]="... formulario.get('endereco.cep.outroAtribuitoOuObjeto')" -->
-                <app-campo-control-erro [mostrarErro]="verificarValidTouched('endereco.cep')"
-                    msgErro="CEP é obrigatório">
+                <app-campo-control-erro [mostrarErro]="verificaRequired('endereco.cep')" msgErro="CEP é obrigatório">
+                </app-campo-control-erro>
+                <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cep').hasError('cepInvalido')"
+                    msgErro="CEP é inválido">
                 </app-campo-control-erro>
             </div>
             <!------>

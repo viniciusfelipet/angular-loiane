@@ -1,3 +1,4 @@
+import { VerificaEmailsService } from './services/verifica-emails.service';
 import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { EstadoBr } from './../shared/models/estado-br';
 import { HttpClient } from '@angular/common/http';
@@ -6,6 +7,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 
 import { DropdownService } from './../shared/services/dropdown.service';
 import { FormValidations } from '../shared/form-validations/form-validations';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-data-form',
@@ -30,10 +32,12 @@ export class DataFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private dropDownService: DropdownService,
-    private consultaCepService: ConsultaCepService
+    private consultaCepService: ConsultaCepService,
+    private verificarEmailService: VerificaEmailsService
   ) { }
 
   ngOnInit(): void {
+    //this.verificarEmailService.verificarEmail('email@email.com').subscribe();
 
     this.dropDownService.getEstadosBr().subscribe((dados: EstadoBr[]) => {
       this.estados = dados;
@@ -62,11 +66,12 @@ export class DataFormComponent implements OnInit {
     // SEGUNDA FORMA DE CRIAR FORMULÁRIO - sintaxe simplificada, utilizando formBuilder:
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
-      email: [null, Validators.compose([Validators.required, Validators.email])],
+      email: [null, Validators.compose([Validators.required, Validators.email]), [this.validarEmail.bind(this)]],
+      confirmarEmail: [null, FormValidations.equalsTo('email')],
 
       // Agrupando os seguintes dados dentro de um "objeto" 'endereco'
       endereco: this.formBuilder.group({
-        cep: [null, Validators.required],
+        cep: [null, [Validators.required, FormValidations.cepValidator]],
         numero: [null, Validators.required],
         complemento: [null],
         rua: [null, Validators.required],
@@ -121,7 +126,6 @@ export class DataFormComponent implements OnInit {
   verificaValidacoesForm(formGroup: FormGroup) {
     // Object.keys: realiza a extração de cada chave do objeto do formulário (nome, email, endereco)
     Object.keys(formGroup.controls).forEach(campo => {
-      console.log(campo);
       const controle = formGroup.get(campo);
       controle.markAsTouched();
 
@@ -208,7 +212,14 @@ export class DataFormComponent implements OnInit {
 
     // realizar o acesso ao formulario, associa o 'campo' ao respectivo campo das 
     // instancias de FormControl (na PRIMEIRA ou SEGUNDA forma de criar formulario)
-    return this.formulario.get(campo).invalid && (this.formulario.get(campo).touched || this.formulario.get(campo).dirty);
+    return this.formulario.get(campo).invalid 
+          && (this.formulario.get(campo).touched || this.formulario.get(campo).dirty);
+  }
+
+  verificaRequired(campo) {
+    return (
+      this.formulario.get(campo).hasError('required') 
+      && (this.formulario.get(campo).touched || this.formulario.get(campo).dirty));
   }
 
   verificaEmailInvalido() {
@@ -238,5 +249,10 @@ export class DataFormComponent implements OnInit {
     const values = this.frameworks.map(v => new FormControl(false));
 
     return this.formBuilder.array(values, FormValidations.requiredMinCheckbox(1));
+  }
+
+  validarEmail(formControl: FormControl) {
+    return this.verificarEmailService.verificarEmail(formControl.value)
+      .pipe(map(emailExiste => emailExiste ? { emailInvalido: true } : null));
   }
 }
