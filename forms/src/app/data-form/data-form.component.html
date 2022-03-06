@@ -2,8 +2,10 @@
 <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
     <!-- NOME ---------------------------------->
-    <div class="form-group row" [ngClass]="aplicaCssErro('nome')">
+    <!-- <app-input-field formControlName="nome" [classeCss]="aplicaCssErro('nome')" id="nome" label="Nome"
+        [control]="formulario.get('nome')"></app-input-field> -->
 
+    <div class="form-group row" [ngClass]="aplicaCssErro('nome')">
         <div class="col-sm-12">
             <label for="nome" class="form-label">Nome</label>
 
@@ -37,13 +39,15 @@
             </app-campo-control-erro>
 
             <!-- Validação Assincrona -->
-            <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'PENDING'" msgErro="Validando email...">
+            <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'PENDING'"
+                msgErro="Validando email...">
             </app-campo-control-erro>
 
             <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'VALID'" msgErro="Email válido!">
             </app-campo-control-erro>
-            
-            <app-campo-control-erro [mostrarErro]="formulario.get('email').hasError('emailInvalido')" msgErro="Email já cadastrado!">
+
+            <app-campo-control-erro [mostrarErro]="formulario.get('email').hasError('emailInvalido')"
+                msgErro="Email já cadastrado!">
             </app-campo-control-erro>
         </div>
     </div>
@@ -58,7 +62,8 @@
             <input type="email" class="form-control" id="confirmarEmail" placeholder="Confirme o email"
                 formControlName="confirmarEmail" required>
 
-            <app-campo-control-erro [mostrarErro]="formulario.get('confirmarEmail').hasError('equalsTo')" msgErro="Emails não são iguais.">
+            <app-campo-control-erro [mostrarErro]="formulario.get('confirmarEmail').hasError('equalsTo')"
+                msgErro="Emails não são iguais.">
             </app-campo-control-erro>
         </div>
     </div>

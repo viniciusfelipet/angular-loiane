@@ -68,4 +68,15 @@ export class FormValidations {
     return validator;
   }
 
+  static getErrorMsg(fieldName: string, validatorName: string, validatorValue?: any) {
+    const config = {
+      'required': `${fieldName} é obrigatório.`,
+      'minlength': `${fieldName} é preciso ter no mínimo ${validatorValue.requiredLength} caracteres.`,
+      'maxlength': `${fieldName} é preciso ter no máximo ${validatorValue.requiredLength} caracteres.`,
+      'cepInvalido': "CEP inválido."
+    }
+
+    return config[validatorName];
+  }
+
 }

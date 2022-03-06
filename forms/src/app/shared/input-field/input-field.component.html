@@ -1,0 +1,13 @@
+<div class="form-group row" [ngClass]="classeCss">
+    <label [for]="id" class="form-label">Nome</label>
+    <input [type]="type" class="form-control" [id]="id" required>
+
+    <!-- outra opção: [mostrarErro]="verificarValidTouched('nome')"  -->
+    <app-campo-control-erro [mostrarErro]="control.invalid && control.touched"
+        msgErro="Campo é obrigatório">
+    </app-campo-control-erro>
+
+    <!-- Serviço de mensagem de erro otimizado -->
+    <!-- <app-error-msg [control]="formulario.get('nome')" label="Nome"></app-error-msg> -->
+
+</div>

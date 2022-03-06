@@ -1,4 +1,4 @@
-Angular - Arquitetura:
+- ANGULAR (ARQUITETURA):
 
 - Modulo/Module -> Component + HTML -> Service ...
 
@@ -15,7 +15,7 @@ Resumindo: É como se o Module fosse um cômodo e os Components os móveis que p
 
 --------------------------------------------------------------------
 --------------------------------------------------------------------
-Conceitos:
+- ANGULAR (CONCEITOS):
 
 @Input - passar informações do html para o component / recebe um valor do componente pai para o componente filho
 @Output - utilizado para expor um evento ou expor um valor
@@ -25,7 +25,7 @@ Metodos 'static': quando um método é static, você tem uma instância para cad
 
 --------------------------------------------------------------------
 --------------------------------------------------------------------
-- DataBinding:
+- DATA BINDING:
 
 <TEMPLATE HTML>	<--{{valor}}--------------------- <COMPONENT> Property Binding com Interpolação
 <TEMPLATE HTML> <--[propriedade]="valor"--------- <COMPONENT> Property Binding com Class/Style (utilizado quando quer referenciar um metodo, uma variavel local ou uma expressão)
@@ -34,7 +34,7 @@ Metodos 'static': quando um método é static, você tem uma instância para cad
 
 --------------------------------------------------------------------
 --------------------------------------------------------------------
-- Forms:
+- FORMS:
 
 Template Driven vs Data Driven (Reativo)
 
@@ -76,7 +76,24 @@ Template Driven vs Data Driven (Reativo)
 - FormBuilder é o construtor de formulários
 - Não é utilizado variaveis locais no HTML, diferente do template-driven. Sendo assim, na maioria das vezes, o HTML utilizará property binding
 - [ngValue] vs [value] no <option> para os <select>: 'ngValue' é usado quando estamos mexendo/comparando com o objeto inteiro, já o 'value' é para quando estamos mexendo/comparando um atribuito simples (ex: [value]="tecnologias.nome")
+
 --------------------------------------------------------------------
 --------------------------------------------------------------------
+- PIPES
 
+Utilizado para transformar um valor dentro do template (Ex: data formatada, números, objeto para json e etc)
 
+-> Parâmetros:
+- São utilizados em alguns pipes.
+- Podem ser passados após o nome do pipe (ex: livro.notaAvaliação | number:'<nº_de_inteiros>.<nº_de_decimais>')
+
+-> PIPES DO ANGULAR (https://angular.io/api?type=pipe):
+1. uppercase: transforma toda a string em maiusculo;
+2. number: manipula os números como a quantidade de casa decimais, cada de inteiros e etc
+3. currency (moeda): converte um número e no padrão de moeda 
+4. date: formata os valores em data.
+5. json: formata um objeto para json (é mais utilizado para debug)
+6. async: utilizado para renderizar valor de formar assíncrona (consulta com o servidor que pode "demorar")
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------

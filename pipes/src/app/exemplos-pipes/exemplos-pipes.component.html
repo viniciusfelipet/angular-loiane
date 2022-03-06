@@ -1,0 +1,51 @@
+<h5>Exemplos de Pipes</h5>
+
+<p>Título: {{ livro.titulo | uppercase | lowercase | camelCase }}</p>
+<p>Estrelas: {{ livro.rating | number:'1.1-2' }}</p>
+<p>Páginas: {{ livro.numeroPaginas | number}}</p>
+<p>Preço: {{ livro.preco | currency}}</p>
+<p>Data Lançamento: {{ livro.dataLancamento | date }}</p>
+<p>Url: {{ livro.url }}</p>
+<br>
+<p>Livro: {{ livro | json }}</p>
+
+<input type="text" [(ngModel)]="filtro" placeholder="Buscar">
+<br>
+<input type="text" #novoValor placeholder="Adicionar Curso">
+<button (click)="addCurso(novoValor.value)">Add Curso</button>
+
+<!-- BEGIN (PIPE PURO) -->
+<!-- Eles não são muito utilizados, pois não "escutam" as mudanças de valores do objeto -->
+<h4>Pipe PURO:</h4>
+<ul>
+    <!-- !!! NÃO SE DEVE USAR DESSA FORMA OS FILTROS EM ARRAY EM PROJETOS REAIS !!!-->
+    <li *ngFor="let liv of livros | filtroArrayPuro:filtro">
+        {{ liv }}
+    </li>
+</ul>
+<!-- END (PIPE PURO) -->
+
+<!-- BEGIN (PIPE IMPURO) -->
+<h4>Pipe IMPURO:</h4>
+<ul>
+    <!-- !!! NÃO SE DEVE USAR DESSA FORMA OS FILTROS EM ARRAY EM PROJETOS REAIS !!!-->
+    <li *ngFor="let liv of livros | filtroArrayImpuro:filtro">
+        {{ liv }}
+    </li>
+</ul>
+<!-- END (PIPE IMPURO) -->
+
+<!-- BEGIN (MANEIRA CORRETA FILTRO) -->
+<h4>Pipe - Maneira correta de utilizar filtros em array (projetos reais):</h4>
+<ul>
+    <li *ngFor="let liv of obterCurso() | filtroArrayImpuro:filtro">
+        {{ liv }}
+    </li>
+</ul>
+<!-- END (MANEIRA CORRETA FILTRO) -->
+
+<h4>Pipe Promise Async (Assíncrono):</h4>
+<p>{{ valorPromiseAsync | async }}</p>
+
+<h4>Pipe Observable Async (Assíncrono):</h4>
+<p>{{ valorObservableAsync | async }}</p>
