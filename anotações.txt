@@ -97,3 +97,7 @@ Utilizado para transformar um valor dentro do template (Ex: data formatada, núm
 
 --------------------------------------------------------------------
 --------------------------------------------------------------------
+- DIRETIVAS:
+
+1. HostListener - escuta um evento feito pela tag que está utilizado essa diretiva no html e dispara o metodo com o mouse em cima do texto
+2. HostBinding - Permite fazer o binding (associação) de um atributo ou classe para uma variavel
